@@ -6,4 +6,4 @@ and then with the trigger actived translate the change in position of the contro
 the players position in the direction choosen.
 
 Pic from hackathon:
-http://i.imgur.com/7ZjhijR.jpg
+![VR locomotion concepting](http://i.imgur.com/7ZjhijR.jpg)
