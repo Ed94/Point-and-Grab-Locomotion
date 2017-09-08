@@ -1,0 +1,2 @@
+E:\Projects\Unity Projects\Point-and-Grab-Locomotion\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+E:\Projects\Unity Projects\Point-and-Grab-Locomotion\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/VR Main.unity
+- path: Assets/PointAndMove_Locomotion/VR PM Test.unity
   isLoaded: 1
   isActive: 1

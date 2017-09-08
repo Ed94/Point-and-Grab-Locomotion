@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Point-and-Grab-Locomotion", "Point-and-Grab-Locomotion.csproj", "{E8BF8426-A16E-AEB3-9DC3-0F877D89514D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Point-and-Grab-Locomotion.Editor", "Point-and-Grab-Locomotion.Editor.csproj", "{C5B75C7B-7F16-FDE8-DA74-C43682A56AF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8BF8426-A16E-AEB3-9DC3-0F877D89514D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8BF8426-A16E-AEB3-9DC3-0F877D89514D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8BF8426-A16E-AEB3-9DC3-0F877D89514D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8BF8426-A16E-AEB3-9DC3-0F877D89514D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B75C7B-7F16-FDE8-DA74-C43682A56AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B75C7B-7F16-FDE8-DA74-C43682A56AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B75C7B-7F16-FDE8-DA74-C43682A56AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B75C7B-7F16-FDE8-DA74-C43682A56AF7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
