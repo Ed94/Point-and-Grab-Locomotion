@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System                    ;
 using System.Collections        ;
 using System.Collections.Generic;
 using UnityEngine               ;
@@ -7,12 +7,15 @@ using VRTK                      ;
 namespace PointAndMove
 {
     [AddComponentMenu("PointAndMove_Locomotion/Scripts/PM_AllInOne")]
+
     public class PM_AllInOne : MonoBehaviour
     {
-        //Point and Move Functions
+        //Mechanical Functions
         void applyTranslation()
         {
-            Vector3 newPos = new Vector3(direction.x * velocity + playArea.position.x, direction.y * velocity + playArea.position.y, direction.z * velocity + playArea.position.z);
+            Vector3 newPos = new Vector3(direction.x * velocity + playArea.position.x,
+                                         direction.y * velocity + playArea.position.y,
+                                         direction.z * velocity + playArea.position.z);
 
             playArea.position = newPos;
         }
@@ -25,17 +28,16 @@ namespace PointAndMove
             }
             else
             {
-                velocity = velocity + Vector3.Distance(currPosition, prevPosition) * sensitivity/10 ;
+                velocity += Vector3.Distance(currPosition, prevPosition) * sensitivity / 10;
 
-                if (velocity > 0)
-                {
-                    velocity = velocity - degredation / 2500;
-                }
-                if (velocity < 0)
-                {
-                    velocity = 0;
-                }
+                applyDegrade();
             }
+        }
+
+        void applyDegrade()
+        {
+            if (velocity > 0) { velocity = velocity - degradation / 1000; }
+            if (velocity < 0) { velocity = 0; }
         }
 
         void setDirection()
@@ -45,20 +47,24 @@ namespace PointAndMove
             direction = calculatedDirection;
         }
 
-        //Behavior mechanics.
+        //Behavior Functions
         void floaty()
         {
             if (trackedController.buttonTwoPressed)
             {
                 setDirection();
 
-                velocity = 0;
+                if (killVelOnDirect == true) { velocity = 0; }
             }
             else
             {
                 if (trackedController.triggerClicked)
                 {
                     calcVelocity();
+                }
+                else
+                {
+                    applyDegrade();
                 }
             }
         }
@@ -69,13 +75,13 @@ namespace PointAndMove
             {
                 setDirection();
 
-                velocity = 0;
+                if (killVelOnDirect == true) { velocity = 0; }
             }
             else
             {
                 if (trackedController.triggerClicked && triggerPrevState == false)
                 {
-                    velocity     = 0;
+                    velocity = 0;
 
                     calcVelocity();
                 }
@@ -96,21 +102,44 @@ namespace PointAndMove
             {
                 setDirection();
 
-                velocity = 0;
+                if (killVelOnDirect == true) { velocity = 0; }
             }
             else
             {
                 if (trackedController.triggerClicked)
-                {
                     calcVelocity();
-                }
                 else
-                {
                     velocity = 0;
-                }
             }
         }
 
+        //UI Functions
+        public void setControllerLeft()
+        { controllerSel = controller.left; setController(); }
+
+        public void setControllerRight()
+        { controllerSel = controller.right; setController(); }
+
+        public void setBehaviorSticky()
+        { behavior = moveType.sticky; }
+
+        public void setBehaviorSemiPerpetual()
+        { behavior = moveType.semiPerpetual; }
+
+        public void setBehaviorFloaty()
+        { behavior = moveType.floaty; }
+
+        public void setVelKillDirectOn()
+        { killVelOnDirect = true; }
+
+        public void setVelKillDirectOff()
+        { killVelOnDirect = false; }
+
+        public void setSensitivity(float sensitivity)
+        { this.sensitivity = sensitivity; }
+
+        public void setDegradation(float degradation)
+        { this.degradation = degradation; }
 
         //Setup
         void setController()
@@ -127,8 +156,6 @@ namespace PointAndMove
 
         void onEnable()   //Setting up locoomotion during start function.
         {
-            Debug.Log("onEnable func of PM_AllInOne called.");
-
             Debug.Log("Current behavior: "+  behavior);
 
             playArea = VRTK_DeviceFinder.PlayAreaTransform();
@@ -144,8 +171,7 @@ namespace PointAndMove
         {
             direction = Vector3.zero;
 
-            acceleration = 0;
-            velocity     = 0;
+            velocity = 0;
 
             onEnable();
         }
@@ -172,6 +198,9 @@ namespace PointAndMove
                             sticky();
                             break;
                     }
+
+                    if (trackedController.gripClicked)
+                        velocity = 0;
 
                     applyTranslation();
 
@@ -201,8 +230,8 @@ namespace PointAndMove
         }
 
 
-        public enum moveType { sticky, semiPerpetual, floaty }
-        public enum controller { left, right }
+        public enum moveType   { sticky, semiPerpetual, floaty }
+        public enum controller { left  , right                 }
 
         //Locomotion Related
         //Configurable by user.
@@ -214,31 +243,36 @@ namespace PointAndMove
         [Tooltip("Determines the behavior of the movement.")]
         public moveType behavior = moveType.sticky;
 
-        [Tooltip("Specifies the sensifivity factor for acceleration.")]
+        [Tooltip("States whether setting direction will kill velocity.")]
+        public bool killVelOnDirect = true;
+
+        [Tooltip("Specifies the sensifivity factor for velocity.")]
         public float sensitivity = 1.0f;
 
-        [Tooltip("Specifies the degredation factor for acceleration.")]
-        public float degredation = 1.0f;
+        [Tooltip("Specifies the degredation factor for velocity.")]
+        public float degradation = 1.0f;
 
-        [Tooltip("Button useed to confrim direction to travel.")]
+
+        //Binds don't work yet.
+        [Tooltip("Button useed to confrim direction to travel. Not implemented.")]
         public VRTK_ControllerEvents.ButtonAlias pointConfirm = VRTK_ControllerEvents.ButtonAlias.ButtonOnePress;
 
-        [Tooltip("Button used to kill velocity.")]
+        [Tooltip("Button used to kill velocity. Not implemented.")]
         public VRTK_ControllerEvents.ButtonAlias stop = VRTK_ControllerEvents.ButtonAlias.GripClick;
 
-        [Tooltip("Binding for activating travel behavior.")]
+        [Tooltip("Binding for activating travel behavior. Not implemented.")]
         public VRTK_ControllerEvents.ButtonAlias activateTranslation = VRTK_ControllerEvents.ButtonAlias.TriggerClick;
 
-        //Private & Protected
-        private bool triggerPrevState;
 
-        private float acceleration;
-        private float velocity    ;
+        //Private & Protected
+        private bool triggerPrevState;   //Saves the last state of the trigger.
+
+        private float velocity;
 
         private Vector3 currPosition;
         private Vector3 prevPosition;
 
-        private Transform playArea    ;
+        private Transform playArea;
 
         private Vector3 direction;
 
