@@ -1,4 +1,4 @@
-# Point-and-Grab-Locomotion
+# Point-and-Move-Locomotion
 A locomotion being developed using unity3D for now.
 
 This is a project to a create a form of locomotion involving the use of picking a direction with the HTC Vive's motion controllers,
